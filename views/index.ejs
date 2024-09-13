@@ -5,17 +5,47 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Generátor hesel s obrázkem</title>
   <style>
-    body { font-family: Arial, sans-serif; text-align: center; padding-top: 50px; }
-    #password { font-size: 24px; margin: 20px 0; }
-    #image { max-width: 100%; height: auto; margin-top: 20px; }
+    body { 
+      font-family: Arial, sans-serif; 
+      text-align: center; 
+      padding-top: 50px; 
+      max-width: 800px; 
+      margin: 0 auto; 
+    }
+    #password { 
+      font-size: 24px; 
+      margin: 20px 0; 
+    }
+    #image-container {
+      margin-top: 20px;
+      min-height: 300px; /* Minimální výška pro kontejner obrázku */
+    }
+    #image { 
+      max-width: 100%; 
+      height: auto; 
+      max-height: 400px; /* Maximální výška obrázku */
+    }
+    .error { 
+      color: red; 
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
   <h1>Generátor hesel s obrázkem</h1>
   <div id="password"><%= password %></div>
   <button onclick="location.reload()">Generovat nové heslo a obrázek</button>
-  <% if (imageUrl) { %>
-    <img id="image" src="<%= imageUrl %>" alt="Náhodný obrázek">
-  <% } %>
+  <div id="image-container">
+    <% if (imageUrl) { %>
+      <img id="image" src="<%= imageUrl %>" alt="Náhodný obrázek" onerror="this.onerror=null;this.src='https://via.placeholder.com/400x300?text=Image+Not+Available';">
+    <% } else { %>
+      <p class="error">Nepodařilo se načíst obrázek. Zkuste to prosím znovu.</p>
+    <% } %>
+  </div>
 </body>
 </html>
