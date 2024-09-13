@@ -3,18 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Generátor hesel</title>
-  <link rel="stylesheet" href="/styles.css">
+  <title>Generátor hesel s obrázkem</title>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; padding-top: 50px; }
+    #password { font-size: 24px; margin: 20px 0; }
+    #image { max-width: 100%; height: auto; margin-top: 20px; }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Generátor hesel</h1>
-    <div id="password"><%= password %></div>
-    <label for="length">Délka hesla: <span id="lengthValue">12</span></label>
-    <input type="range" id="length" min="8" max="32" value="12">
-    <button onclick="generatePassword()">Generovat nové heslo</button>
-  </div>
-  <script src="/script.js"></script>
+  <h1>Generátor hesel s obrázkem</h1>
+  <div id="password"><%= password %></div>
+  <button onclick="location.reload()">Generovat nové heslo a obrázek</button>
+  <% if (imageUrl) { %>
+    <img id="image" src="<%= imageUrl %>" alt="Náhodný obrázek">
+  <% } %>
 </body>
 </html>
-
