@@ -16,11 +16,25 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      margin: 20px 0;
+      margin: 20px auto;
+      max-width: 300px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      overflow: hidden;
     }
     #password { 
-      font-size: 24px; 
-      margin-right: 10px;
+      flex-grow: 1;
+      padding: 10px;
+      font-size: 16px;
+      border: none;
+      outline: none;
+    }
+    #copy-button {
+      background: none;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+      font-size: 20px;
     }
     #image-container {
       margin-top: 20px;
@@ -34,21 +48,21 @@
     .error { 
       color: red; 
     }
-    button {
+    #generate-button {
       padding: 10px 20px;
       font-size: 16px;
       cursor: pointer;
-      margin: 0 5px;
+      margin: 20px 0;
     }
   </style>
 </head>
 <body>
   <h1>Generátor hesel s obrázkem</h1>
   <div id="password-container">
-    <div id="password"><%= password %></div>
-    <button onclick="copyPassword()">Kopírovat heslo</button>
+    <input type="text" id="password" value="<%= password %>" readonly>
+    <button id="copy-button" onclick="copyPassword()">📋</button>
   </div>
-  <button onclick="location.reload()">Generovat nové heslo a obrázek</button>
+  <button id="generate-button" onclick="location.reload()">Generovat nové heslo a obrázek</button>
   <div id="image-container">
     <% if (imageUrl) { %>
       <img id="image" src="<%= imageUrl %>" alt="Náhodný obrázek" onerror="this.onerror=null;this.src='https://via.placeholder.com/400x300?text=Image+Not+Available';">
@@ -60,14 +74,9 @@
   <script>
     function copyPassword() {
       const passwordElement = document.getElementById('password');
-      const password = passwordElement.textContent;
-      
-      navigator.clipboard.writeText(password).then(function() {
-        alert('Heslo bylo zkopírováno do schránky!');
-      }, function(err) {
-        console.error('Nepodařilo se zkopírovat heslo: ', err);
-        alert('Nepodařilo se zkopírovat heslo. Zkuste to prosím znovu.');
-      });
+      passwordElement.select();
+      document.execCommand('copy');
+      alert('Heslo bylo zkopírováno do schránky!');
     }
   </script>
 </body>
