@@ -8,37 +8,46 @@
     body { 
       font-family: Arial, sans-serif; 
       text-align: center; 
-      padding-top: 50px; 
+      padding: 50px 20px; 
       max-width: 800px; 
       margin: 0 auto; 
     }
+    #password-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 20px 0;
+    }
     #password { 
       font-size: 24px; 
-      margin: 20px 0; 
+      margin-right: 10px;
     }
     #image-container {
       margin-top: 20px;
-      min-height: 300px; /* Minimální výška pro kontejner obrázku */
+      min-height: 300px;
     }
     #image { 
       max-width: 100%; 
       height: auto; 
-      max-height: 400px; /* Maximální výška obrázku */
+      max-height: 400px;
     }
     .error { 
       color: red; 
     }
     button {
-      margin-top: 20px;
       padding: 10px 20px;
       font-size: 16px;
       cursor: pointer;
+      margin: 0 5px;
     }
   </style>
 </head>
 <body>
   <h1>Generátor hesel s obrázkem</h1>
-  <div id="password"><%= password %></div>
+  <div id="password-container">
+    <div id="password"><%= password %></div>
+    <button onclick="copyPassword()">Kopírovat heslo</button>
+  </div>
   <button onclick="location.reload()">Generovat nové heslo a obrázek</button>
   <div id="image-container">
     <% if (imageUrl) { %>
@@ -47,5 +56,19 @@
       <p class="error">Nepodařilo se načíst obrázek. Zkuste to prosím znovu.</p>
     <% } %>
   </div>
+
+  <script>
+    function copyPassword() {
+      const passwordElement = document.getElementById('password');
+      const password = passwordElement.textContent;
+      
+      navigator.clipboard.writeText(password).then(function() {
+        alert('Heslo bylo zkopírováno do schránky!');
+      }, function(err) {
+        console.error('Nepodařilo se zkopírovat heslo: ', err);
+        alert('Nepodařilo se zkopírovat heslo. Zkuste to prosím znovu.');
+      });
+    }
+  </script>
 </body>
 </html>
